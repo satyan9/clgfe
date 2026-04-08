@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LoginForm from '../components/LoginForm';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Award, BookOpen, Globe, MapPin, Mail, Phone } from 'lucide-react';
+import { GraduationCap, Award, BookOpen, Globe, MapPin, Mail, Phone, Bell, ChevronRight } from 'lucide-react';
 
 const MainPage = () => {
   const navigate = useNavigate();
-
-  const [error, setError] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
   const handleStudentLogin = async (credentials) => {
     setError('');
@@ -33,269 +33,432 @@ const MainPage = () => {
     }
   };
 
-  const FeatureCard = ({ icon: Icon, title, desc, delay }) => (
-    <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ delay, duration: 0.5 }}
-      whileHover={{ y: -5, boxShadow: '0 10px 30px rgba(0,0,0,0.2)' }}
-      className="glass-panel" 
-      style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', flex: 1, minWidth: '250px' }}
-    >
-      <div style={{ padding: '16px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '12px', width: 'fit-content' }}>
-        <Icon color="#60a5fa" size={28} />
-      </div>
-      <h3 style={{ fontSize: '1.25rem', fontWeight: 600 }}>{title}</h3>
-      <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: '1.6' }}>{desc}</p>
-    </motion.div>
-  );
-
   return (
     <div style={{ padding: '0', scrollBehavior: 'smooth' }}>
       
-      {/* Navigation Bar */}
+      {/* Top Notice Bar */}
+      <div className="top-notice-bar">
+        <div>
+          <span style={{ marginRight: '1rem' }}><Phone size={14} style={{ display: 'inline', marginRight: '4px' }}/> +1 (800) 555-0198</span>
+          <span><Mail size={14} style={{ display: 'inline', marginRight: '4px' }}/> admissions@globaltech.edu</span>
+        </div>
+        <div>
+          <a href="#about" style={{ color: 'white', textDecoration: 'none', marginRight: '15px' }}>Alumni</a>
+          <a href="#contact" style={{ color: 'white', textDecoration: 'none', marginRight: '15px' }}>Careers</a>
+          <a href="#contact" style={{ color: 'white', textDecoration: 'none' }}>Library</a>
+        </div>
+      </div>
+
+      {/* Ticker */}
+      <div className="news-ticker">
+        <span style={{ fontWeight: 800, marginRight: '10px', background: 'var(--brand-red)', color: 'white', padding: '2px 8px', borderRadius: '4px' }}>NEW</span>
+        <div style={{ flex: 1, overflow: 'hidden' }}>
+          <div className="ticker-content">
+            Admissions open for the Academic Year 2026! Apply now online. &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; 
+            Global Tech breaks records in national placement drives! &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
+            Upcoming Seminar on AI & Robotics on May 10th.
+          </div>
+        </div>
+      </div>
+
+      {/* Main Navigation */}
       <nav style={{ 
-        position: 'fixed', top: 0, width: '100%', padding: '1.5rem 4rem', 
+        position: 'sticky', top: 0, width: '100%', padding: '1rem 4rem', 
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        background: 'rgba(15, 23, 42, 0.8)', backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--glass-border)', zIndex: 50
+        background: '#ffffff', borderBottom: '3px solid var(--brand-red)', zIndex: 50,
+        boxShadow: '0 4px 12px rgba(0,0,0,0.05)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ background: '#3b82f6', padding: '8px', borderRadius: '8px' }}>
-            <GraduationCap color="white" size={24} />
+          <div style={{ background: 'var(--brand-navy)', padding: '10px', borderRadius: '4px' }}>
+            <GraduationCap color="white" size={36} />
           </div>
-          <span style={{ fontSize: '1.25rem', fontWeight: 700, letterSpacing: '0.5px' }}>Global Tech University</span>
+          <div>
+            <span style={{ fontSize: '1.6rem', fontWeight: 900, color: 'var(--brand-navy)', display: 'block', lineHeight: 1 }}>GLOBAL TECH</span>
+            <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--brand-red)', letterSpacing: '2px' }}>UNIVERSITY</span>
+          </div>
         </div>
-        <div style={{ display: 'flex', gap: '2rem', fontWeight: 500 }}>
-          <a href="#home" style={{ color: 'white', textDecoration: 'none' }}>Home</a>
-          <a href="#about" style={{ color: 'white', textDecoration: 'none' }}>About Us</a>
-          <a href="#academics" style={{ color: 'white', textDecoration: 'none' }}>Academics</a>
-          <a href="#contact" style={{ color: 'white', textDecoration: 'none' }}>Contact</a>
+        <div style={{ display: 'flex', gap: '2rem', fontWeight: 600, alignItems: 'center', color: 'var(--brand-navy)' }}>
+          <a href="#home" style={{ color: 'inherit', textDecoration: 'none' }}>HOME</a>
+          <a href="#about" style={{ color: 'inherit', textDecoration: 'none' }}>INSTITUTION</a>
+          <a href="#highlights" style={{ color: 'inherit', textDecoration: 'none' }}>CAMPUS LIFE</a>
+          <a href="#contact" style={{ color: 'inherit', textDecoration: 'none' }}>CONTACT</a>
+          <button 
+            onClick={() => {
+              const el = document.getElementById('login-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            style={{ 
+              background: 'var(--brand-red)', color: 'white', padding: '10px 24px', 
+              borderRadius: '4px', border: 'none', fontWeight: 700, cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: '8px'
+            }}
+          >
+            STUDENT LOGIN <ChevronRight size={16} />
+          </button>
         </div>
       </nav>
 
-      {/* Hero Section (Home + Login) */}
+      {/* Hero Section */}
       <section id="home" style={{ 
         width: '100%', 
-        minHeight: '100vh',
+        height: '600px',
+        position: 'relative',
+        background: 'url(/campus_banner.png) center/cover no-repeat',
         display: 'flex',
-        flexWrap: 'wrap',
-        paddingTop: '80px' // offset for fixed nav
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        borderBottom: '10px solid var(--brand-navy)'
       }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'linear-gradient(to right, rgba(14, 39, 83, 0.9) 0%, rgba(14, 39, 83, 0.3) 100%)' }} />
         
-        {/* Left Side: Hero Text */}
-        <div style={{ flex: '1 1 50%', padding: '4rem 4rem 4rem 8rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1 style={{ fontSize: '4.5rem', fontWeight: 800, lineHeight: '1.1', marginBottom: '1.5rem' }}>
-              Empowering the <br />
-              <span style={{ 
-                background: 'linear-gradient(to right, #60a5fa, #a78bfa)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>Next Generation</span>
+        <div style={{ position: 'relative', zIndex: 10, padding: '0 6rem', maxWidth: '800px', color: 'white' }}>
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <span style={{ display: 'inline-block', padding: '6px 12px', background: 'var(--brand-red)', fontWeight: 700, marginBottom: '1rem', borderRadius: '4px' }}>
+              REDEFINING EXCELLENCE
+            </span>
+            <h1 style={{ fontSize: '3.5rem', fontWeight: 900, lineHeight: '1.2', marginBottom: '1.5rem', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+              Empowering the Next Generation of Innovators
             </h1>
-            
-            <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '2rem', maxWidth: '500px', lineHeight: '1.6' }}>
-              Join a premier institution dedicated to excellence in education, groundbreaking research, and holistic student development. 
+            <p style={{ fontSize: '1.2rem', marginBottom: '2rem', lineHeight: '1.6', opacity: 0.9 }}>
+              Sri Venkateswara College inspired layout with traditional institutional authority, cutting-edge facilities, and a legacy of producing world-class tech leaders.
             </p>
-
-            <motion.a 
-              href="#about"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              style={{ 
-                display: 'inline-block', padding: '14px 28px', background: 'transparent',
-                border: '1px solid #3b82f6', color: '#60a5fa', borderRadius: '30px',
-                fontWeight: 600, textDecoration: 'none', transition: 'background 0.3s'
-              }}
-            >
-              Explore Our Campus ↓
-            </motion.a>
           </motion.div>
         </div>
+      </section>
 
-        {/* Right Side: Student Login */}
-        <div style={{ flex: '1 1 50%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4rem', background: 'rgba(0,0,0,0.2)' }}>
-          <div style={{ width: '100%', maxWidth: '420px' }}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              style={{ marginBottom: '2rem', textAlign: 'center' }}
-            >
-              <div style={{ 
-                display: 'inline-block', 
-                padding: '6px 16px', 
-                background: 'rgba(59, 130, 246, 0.1)', 
-                color: '#60a5fa',
-                borderRadius: '20px',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                letterSpacing: '0.5px'
-              }}>
-                STUDENT PORTAL ACCESS
+      {/* Floating Student Portal Login Section */}
+      <section id="login-section" style={{ padding: '0 4rem', marginTop: '-80px', position: 'relative', zIndex: 20 }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '2rem' }}>
+          
+          <div className="glass-panel" style={{ flex: '1 1 60%', background: 'white', padding: '2.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+              <div style={{ padding: '12px', background: 'rgba(218, 41, 28, 0.1)', borderRadius: '8px', color: 'var(--brand-red)' }}>
+                <Bell size={32} />
               </div>
-            </motion.div>
-            
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--brand-navy)' }}>Important Announcements</h2>
+            </div>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <li style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem' }}>
+                <a href="#" style={{ color: 'var(--brand-navy)', textDecoration: 'none', fontWeight: 600, fontSize: '1.1rem' }}>Semester Examination Timetable Published</a>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>Check the student portal for precise dates and hall allocations.</p>
+              </li>
+              <li style={{ borderBottom: '1px solid #e2e8f0', paddingBottom: '1rem' }}>
+                <a href="#" style={{ color: 'var(--brand-navy)', textDecoration: 'none', fontWeight: 600, fontSize: '1.1rem' }}>Registration for AI Workshop</a>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '4px' }}>Limited seats available for the 3-day deep learning bootcamp.</p>
+              </li>
+            </ul>
+          </div>
+
+          <div style={{ flex: '1 1 40%' }}>
             <LoginForm 
               role="student"
-              title="Welcome Back"
-              subtitle="Enter your credentials to access your academic dashboard."
+              title="Student Portal Login"
+              subtitle="Access your academic dashboard, grades, and schedules."
               onSubmit={handleStudentLogin}
               error={error}
               loading={loading}
             />
           </div>
+
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" style={{ padding: '8rem 4rem', background: 'rgba(15, 23, 42, 0.3)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <section id="about" style={{ padding: '6rem 4rem', background: 'var(--bg-secondary)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '4rem', alignItems: 'center' }}>
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: '4rem' }}
+            initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
+            style={{ flex: '1 1 50%' }}
           >
-            <h2 style={{ fontSize: '3rem', fontWeight: 700, marginBottom: '1rem' }}>About Our College</h2>
-            <p style={{ color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
-              Established in 1995, Global Tech University has been at the forefront of technological innovation and academic excellence. 
-              We nurture leaders who are prepared to face the challenges of tomorrow.
+            <h2 className="section-title" style={{ textAlign: 'left' }}>About The Institution</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: '1.8', marginBottom: '1.5rem' }}>
+              Established in 1995, Global Tech University is an autonomous institution affiliated with the highest national academic boards. We are committed to providing quality education in engineering and technology to prepare perfectly rounded technocrats.
             </p>
+            <ul style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: '1.8', paddingLeft: '1.5rem', marginBottom: '2rem' }}>
+              <li>NAAC Accredited with 'A+' Grade</li>
+              <li>Consistently ranked among Top 10 Engineering Colleges</li>
+              <li>State-of-the-art research centers and laboratories</li>
+              <li>Over 150+ international university tie-ups</li>
+            </ul>
+            <button className="btn-primary" style={{ width: 'auto', display: 'inline-flex', padding: '12px 32px' }}>Read More</button>
           </motion.div>
-
-          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
-            <FeatureCard icon={Award} title="Top Ranked Institute" desc="Consistently ranked among the top 10 technological institutes globally for our rigorous curriculum and outstanding research output." delay={0.1} />
-            <FeatureCard icon={BookOpen} title="Expert Faculty" desc="Learn from industry leaders, distinguished scholars, and renowned academic researchers who bring real-world experience to the classroom." delay={0.3} />
-            <FeatureCard icon={Globe} title="Global Network" desc="Connect with an extensive alumni base and university partners across 150+ countries, opening doors to international opportunities." delay={0.5} />
-          </div>
-        </div>
-      </section>
-
-      {/* Highlights & Banners Section */}
-      <section id="highlights" style={{ padding: '8rem 4rem', background: 'var(--bg-color)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            style={{ textAlign: 'center', marginBottom: '4rem' }}
-          >
-            <h2 style={{ fontSize: '3rem', fontWeight: 700, marginBottom: '1rem' }}>Campus Highlights & Excellence</h2>
-            <p style={{ color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
-              From top-ranked students breaking records to state-of-the-art facilities, explore the vibrant life at Global Tech.
-            </p>
-          </motion.div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            <motion.div 
-              whileHover={{ y: -10, scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-              style={{ borderRadius: '16px', overflow: 'hidden', height: '350px', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', cursor: 'pointer' }}
-            >
-              <img src="/top_students.png" alt="Top Ranked Students" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem 1.5rem', background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)', color: 'white' }}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Top Ranked Scholars</h3>
-                <p style={{ fontSize: '0.9rem', color: '#cbd5e1' }}>Our students winning national tech awards.</p>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              whileHover={{ y: -10, scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-              style={{ borderRadius: '16px', overflow: 'hidden', height: '350px', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', cursor: 'pointer' }}
-            >
-              <img src="/campus_banner.png" alt="Campus Banner" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem 1.5rem', background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)', color: 'white' }}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Welcoming Campus</h3>
-                <p style={{ fontSize: '0.9rem', color: '#cbd5e1' }}>Join the tradition of excellence.</p>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              whileHover={{ y: -10, scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-              style={{ borderRadius: '16px', overflow: 'hidden', height: '350px', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.4)', cursor: 'pointer' }}
-            >
-              <img src="/college_lab.png" alt="High Tech Labs" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem 1.5rem', background: 'linear-gradient(to top, rgba(0,0,0,0.9), transparent)', color: 'white' }}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 700 }}>Advanced Facilities</h3>
-                <p style={{ fontSize: '0.9rem', color: '#cbd5e1' }}>Hands-on learning with state of the art tech.</p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" style={{ padding: '8rem 4rem' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '4rem' }}>
           
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            style={{ flex: '1 1 40%' }}
+            initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+            style={{ flex: '1 1 40%', position: 'relative' }}
           >
-            <h2 style={{ fontSize: '3rem', fontWeight: 700, marginBottom: '1.5rem' }}>Get in Touch</h2>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', lineHeight: '1.6' }}>
-              Have questions about admissions or programs? Our administration office is always here to help you navigate your academic journey.
-            </p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ padding: '12px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '50%' }}><MapPin color="#60a5fa" /></div>
-                <div>
-                  <h4 style={{ fontWeight: 600, fontSize: '1.1rem' }}>Campus Address</h4>
-                  <p style={{ color: 'var(--text-secondary)' }}>123 University Drive, Innovation City, TC 90210</p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ padding: '12px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '50%' }}><Mail color="#60a5fa" /></div>
-                <div>
-                  <h4 style={{ fontWeight: 600, fontSize: '1.1rem' }}>Email Us</h4>
-                  <p style={{ color: 'var(--text-secondary)' }}>admissions@globaltech.edu</p>
-                </div>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div style={{ padding: '12px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: '50%' }}><Phone color="#60a5fa" /></div>
-                <div>
-                  <h4 style={{ fontWeight: 600, fontSize: '1.1rem' }}>Call Us</h4>
-                  <p style={{ color: 'var(--text-secondary)' }}>+1 (800) 555-0198</p>
-                </div>
-              </div>
+            <div style={{ width: '100%', height: '400px', background: 'url(/campus_banner.png) center/cover no-repeat', borderRadius: '8px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }} />
+            <div style={{ position: 'absolute', bottom: '-20px', left: '-20px', background: 'var(--brand-navy)', color: 'white', padding: '2rem', borderRadius: '8px', boxShadow: '0 10px 30px rgba(14, 39, 83, 0.3)' }}>
+              <div style={{ fontSize: '3rem', fontWeight: 900, lineHeight: 1 }}>25+</div>
+              <div style={{ fontSize: '1.1rem', fontWeight: 500 }}>Years of Excellence</div>
             </div>
           </motion.div>
+        </div>
+      </section>
 
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="glass-panel"
-            style={{ flex: '1 1 50%', padding: '3rem' }}
-          >
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '2rem' }}>Send a Message</h3>
-            <form onSubmit={(e) => e.preventDefault()}>
-              <input type="text" placeholder="Your Name" className="input-field" style={{ marginBottom: '1rem' }} />
-              <input type="email" placeholder="Your Email" className="input-field" style={{ marginBottom: '1rem' }} />
-              <textarea placeholder="How can we help you?" className="input-field" style={{ minHeight: '120px', resize: 'vertical', marginBottom: '1.5rem' }}></textarea>
-              <button className="btn-primary" style={{ padding: '16px' }}>Submit Message</button>
-            </form>
+      {/* Vision & Mission Section */}
+      <section style={{ padding: '4rem 4rem', background: 'var(--brand-navy)', color: 'white' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 45%', padding: '2.5rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', background: 'rgba(255,255,255,0.02)' }}>
+            <h3 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--brand-gold)', marginBottom: '1rem' }}>Our Vision</h3>
+            <p style={{ lineHeight: '1.8', fontSize: '1.05rem', color: '#cbd5e1' }}>To be a premier institution of engineering and technology, pursuing excellence through innovation, research, and holistic education that transforms students into socially responsible global leaders.</p>
+          </div>
+          <div style={{ flex: '1 1 45%', padding: '2.5rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', background: 'rgba(255,255,255,0.02)' }}>
+            <h3 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--brand-gold)', marginBottom: '1rem' }}>Our Mission</h3>
+            <p style={{ lineHeight: '1.8', fontSize: '1.05rem', color: '#cbd5e1' }}>To impart quality technical education, cultivate an ecosystem of research and entrepreneurship, and bridge the gap between academic theory and deep industrial practice.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Founders / Leadership Section */}
+      <section style={{ padding: '6rem 4rem', background: 'var(--bg-color)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 className="section-title">Leadership & Founders</h2>
+          
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginBottom: '4rem', textAlign: 'center' }}>
+            <h3 style={{ fontSize: '1.8rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '1.5rem' }}>The Story of Global Tech</h3>
+            <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: 'var(--text-secondary)', maxWidth: '900px', margin: '0 auto' }}>
+              Founded in memory of visionary philanthropists, Global Tech was established with a singular dream: to create an institution that rivaled the finest global academies while remaining deeply rooted in foundational ethics. The institution grew from a single block of classrooms in 1995 to a sprawling modern campus accommodating over 5,000 brilliant minds. We strive every day to produce thought leaders and innovators who will architect the future of our nation.
+            </p>
           </motion.div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem' }}>
+            {/* Profile 1 */}
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} style={{ textAlign: 'center' }}>
+              <div style={{ width: '200px', height: '200px', borderRadius: '50%', background: '#e2e8f0', margin: '0 auto 1.5rem auto', overflow: 'hidden', border: '4px solid var(--brand-red)', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}>
+                <img src="/top_students.png" alt="Founder Chairman" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(60%)' }} />
+              </div>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)' }}>Dr. Venkat Srinivasan</h3>
+              <p style={{ color: 'var(--brand-red)', fontWeight: 600 }}>Founder Chairman</p>
+            </motion.div>
+            
+            {/* Profile 2 */}
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} viewport={{ once: true }} style={{ textAlign: 'center' }}>
+              <div style={{ width: '200px', height: '200px', borderRadius: '50%', background: '#e2e8f0', margin: '0 auto 1.5rem auto', overflow: 'hidden', border: '4px solid var(--brand-gold)', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}>
+                <img src="/campus_banner.png" alt="Co-Founder" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(50%)' }} />
+              </div>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)' }}>Smt. Lakshmi Srinivasan</h3>
+              <p style={{ color: 'var(--brand-red)', fontWeight: 600 }}>Co-Founder & Secretary</p>
+            </motion.div>
+
+            {/* Profile 3 */}
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} viewport={{ once: true }} style={{ textAlign: 'center' }}>
+              <div style={{ width: '200px', height: '200px', borderRadius: '50%', background: '#e2e8f0', margin: '0 auto 1.5rem auto', overflow: 'hidden', border: '4px solid var(--brand-navy)', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}>
+                <img src="/college_lab.png" alt="Principal" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(30%)' }} />
+              </div>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)' }}>Dr. K. Rajendran</h3>
+              <p style={{ color: 'var(--brand-red)', fontWeight: 600 }}>Principal & Director</p>
+            </motion.div>
+
+            {/* Profile 4 */}
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }} viewport={{ once: true }} style={{ textAlign: 'center' }}>
+              <div style={{ width: '200px', height: '200px', borderRadius: '50%', background: '#e2e8f0', margin: '0 auto 1.5rem auto', overflow: 'hidden', border: '4px solid #cbd5e1', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}>
+                <img src="/top_students.png" alt="Dean" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(20%)' }} />
+              </div>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)' }}>Prof. Anand Kumar</h3>
+              <p style={{ color: 'var(--brand-red)', fontWeight: 600 }}>Dean of Academics</p>
+            </motion.div>
+          </div>
 
         </div>
       </section>
-      
-      {/* Footer */}
-      <footer style={{ padding: '2rem 4rem', background: 'rgba(0,0,0,0.5)', textAlign: 'center', color: 'var(--text-secondary)', borderTop: '1px solid var(--glass-border)' }}>
-        <p>&copy; 2026 Global Tech University. All rights reserved.</p>
-      </footer>
+
+      {/* Academic Programs Section */}
+      <section style={{ padding: '6rem 4rem', background: 'var(--bg-secondary)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 className="section-title">Academic Streams</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
+            {['MPC (Maths, Physics, Chemistry)', 'BiPC (Biology, Physics, Chemistry)', 'MEC (Maths, Economics, Commerce)', 'CEC (Civics, Economics, Commerce)', 'HEC (History, Economics, Civics)', 'MBiPC (Maths, Bio, Physics, Chem)'].map((dept, idx) => (
+              <motion.div key={idx} whileHover={{ y: -5 }} className="glass-panel" style={{ padding: '2rem', textAlign: 'center', borderTop: '4px solid var(--brand-navy)' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 600, color: 'var(--brand-navy)', marginBottom: '1rem', height: '40px' }}>{dept}</h3>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>1st & 2nd Year Intermediate</p>
+                <div style={{ cursor: 'pointer', color: 'var(--brand-red)', fontWeight: 600, fontSize: '0.9rem', display: 'inline-flex', alignItems: 'center' }}>View Curriculum <ChevronRight size={14} /></div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Results Section */}
+      <section style={{ padding: '6rem 4rem', background: 'white' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 className="section-title">Our Shining Stars - 2025 Results</h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginBottom: '3rem' }}>Consistent state-level top ranks in Board Examinations and Competitive Entrances (JEE/NEET).</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem' }}>
+            {[ 
+              { rank: 'State 1st', exam: 'JEE Mains', name: 'R. Siddharth' }, 
+              { rank: 'State 3rd', exam: 'NEET UG', name: 'M. Shruthi' }, 
+              { rank: '99.2%', exam: 'Intermediate Boards', name: 'K. Aditya' }, 
+              { rank: 'State 5th', exam: 'EAPCET', name: 'P. Vignesh' } 
+            ].map((topper, idx) => (
+              <motion.div key={idx} whileHover={{ y: -5 }} className="glass-panel" style={{ padding: '2rem', borderTop: '4px solid var(--brand-gold)' }}>
+                 <div style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--brand-red)', marginBottom: '0.5rem' }}>{topper.rank}</div>
+                 <div style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>{topper.exam}</div>
+                 <div style={{ color: 'var(--text-secondary)' }}>{topper.name}</div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Facilities Section */}
+      <section style={{ padding: '6rem 4rem', background: 'var(--bg-secondary)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 className="section-title">World-Class Facilities</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+             <motion.div whileHover={{ scale: 1.02 }} className="glass-panel" style={{ padding: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ padding: '12px', background: 'rgba(14, 39, 83, 0.1)', borderRadius: '8px' }}><BookOpen color="var(--brand-navy)" size={24} /></div>
+                <div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>Digital Library</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5' }}>Access to over 50,000 reference books, journals, and digital modules tailored for competitive exams.</p>
+                </div>
+             </motion.div>
+             <motion.div whileHover={{ scale: 1.02 }} className="glass-panel" style={{ padding: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ padding: '12px', background: 'rgba(14, 39, 83, 0.1)', borderRadius: '8px' }}><Globe color="var(--brand-navy)" size={24} /></div>
+                <div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>Smart Classrooms</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5' }}>Interactive AC classrooms equipped with high-end projection systems to visualize complex concepts.</p>
+                </div>
+             </motion.div>
+             <motion.div whileHover={{ scale: 1.02 }} className="glass-panel" style={{ padding: '2rem', display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+                <div style={{ padding: '12px', background: 'rgba(14, 39, 83, 0.1)', borderRadius: '8px' }}><MapPin color="var(--brand-navy)" size={24} /></div>
+                <div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>Safe Transportation</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: '1.5' }}>A fleet of 50+ college buses connecting every major route across the city for safe and timely transit.</p>
+                </div>
+             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Events & Functions Section */}
+      <section style={{ padding: '6rem 4rem', background: 'var(--bg-color)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative' }}>
+          <h2 className="section-title">Events & Functions Gallery</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+            
+            {/* Event 1 */}
+            <motion.div whileHover={{ y: -5 }} style={{ border: '1px solid #e2e8f0', borderRadius: '4px', overflow: 'hidden', background: 'white', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ width: '100%', height: '350px', background: 'url(/top_students.png) center/cover no-repeat', borderBottom: '1px solid #e2e8f0' }} />
+              <div style={{ display: 'flex', flex: 1 }}>
+                <div style={{ background: 'var(--brand-navy)', color: 'white', padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '90px' }}>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 600 }}>Aug</span>
+                  <span style={{ fontSize: '2rem', fontWeight: 800 }}>27</span>
+                </div>
+                <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.8rem', lineHeight: 1.3 }}>Valedictory function of PACE & IETE</h3>
+                  <div style={{ cursor: 'pointer', color: 'var(--brand-navy)', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px' }}>Learn More <span style={{ color: 'var(--brand-red)', marginLeft: '2px' }}>→</span></div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Event 2 */}
+            <motion.div whileHover={{ y: -5 }} style={{ border: '1px solid #e2e8f0', borderRadius: '4px', overflow: 'hidden', background: 'white', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ width: '100%', height: '350px', background: 'url(/campus_banner.png) center/cover no-repeat', borderBottom: '1px solid #e2e8f0' }} />
+              <div style={{ display: 'flex', flex: 1 }}>
+                <div style={{ background: 'var(--brand-navy)', color: 'white', padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '90px' }}>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 600 }}>Aug</span>
+                  <span style={{ fontSize: '2rem', fontWeight: 800 }}>27</span>
+                </div>
+                <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.8rem', lineHeight: 1.3 }}>Walk-In-Interview for Faculty Openings</h3>
+                  <div style={{ cursor: 'pointer', color: 'var(--brand-navy)', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px' }}>Learn More <span style={{ color: 'var(--brand-red)', marginLeft: '2px' }}>→</span></div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Event 3 */}
+            <motion.div whileHover={{ y: -5 }} style={{ border: '1px solid #e2e8f0', borderRadius: '4px', overflow: 'hidden', background: 'white', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ width: '100%', height: '350px', background: 'url(/college_lab.png) center/cover no-repeat', borderBottom: '1px solid #e2e8f0' }} />
+              <div style={{ display: 'flex', flex: 1 }}>
+                <div style={{ background: 'var(--brand-navy)', color: 'white', padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '90px' }}>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 600 }}>Aug</span>
+                  <span style={{ fontSize: '2rem', fontWeight: 800 }}>25</span>
+                </div>
+                <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.8rem', lineHeight: 1.3 }}>15 years of Excellence in Engineering</h3>
+                  <div style={{ cursor: 'pointer', color: 'var(--brand-navy)', fontWeight: 600, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '4px' }}>Learn More <span style={{ color: 'var(--brand-red)', marginLeft: '2px' }}>→</span></div>
+                </div>
+              </div>
+            </motion.div>
+            
+          </div>
+          
+          {/* Subtle dots indicator to match slider look */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '3rem' }}>
+             {[1, 2, 3, 4, 5, 6, 7].map(num => (
+               <div key={num} style={{ width: '12px', height: '12px', background: num === 4 ? 'var(--brand-navy)' : '#cbd5e1', borderRadius: '2px' }}></div>
+             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Highlights Section */}
+      <section id="highlights" style={{ padding: '6rem 4rem', background: 'white' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 className="section-title">Campus Excellence</h2>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
+            <motion.div whileHover={{ y: -5 }} className="glass-panel" style={{ overflow: 'hidden' }}>
+              <img src="/top_students.png" alt="Top Ranked Students" style={{ width: '100%', height: '250px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>Academic Achievers</h3>
+                <p style={{ color: 'var(--text-secondary)' }}>Celebrating our top scholars who secured university ranks and gold medals in their respective disciplines.</p>
+              </div>
+            </motion.div>
+
+            <motion.div whileHover={{ y: -5 }} className="glass-panel" style={{ overflow: 'hidden' }}>
+              <img src="/college_lab.png" alt="High Tech Labs" style={{ width: '100%', height: '250px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>Research & Innovation</h3>
+                <p style={{ color: 'var(--text-secondary)' }}>Our modern laboratories are equipped with industry-standard technologies to bridge the gap between academia and corporate.</p>
+              </div>
+            </motion.div>
+
+            <motion.div whileHover={{ y: -5 }} className="glass-panel" style={{ overflow: 'hidden' }}>
+              <img src="/campus_banner.png" alt="Campus Life" style={{ width: '100%', height: '250px', objectFit: 'cover' }} />
+              <div style={{ padding: '1.5rem' }}>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>Vibrant Campus Life</h3>
+                <p style={{ color: 'var(--text-secondary)' }}>A green, 100-acre campus providing the perfect ecosystem for athletic, cultural, and extracurricular growth.</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact & Footer Section */}
+      <section id="contact" style={{ background: 'var(--brand-navy)', color: 'white' }}>
+        <div style={{ padding: '5rem 4rem', maxWidth: '1200px', margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: '4rem' }}>
+          <div style={{ flex: '1 1 300px' }}>
+             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.5rem' }}>
+                <GraduationCap color="var(--brand-gold)" size={36} />
+                <span style={{ fontSize: '1.4rem', fontWeight: 900 }}>GLOBAL TECH</span>
+             </div>
+             <p style={{ color: '#cbd5e1', lineHeight: '1.6', marginBottom: '2rem' }}>
+                Pioneering education, nurturing talent, and building paths to a brighter tomorrow.
+             </p>
+             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', color: '#cbd5e1' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><MapPin size={18} color="var(--brand-gold)"/> 123 University Drive, Innovation City</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Phone size={18} color="var(--brand-gold)"/> +1 (800) 555-0198</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}><Mail size={18} color="var(--brand-gold)"/> admissions@globaltech.edu</div>
+             </div>
+          </div>
+
+          <div style={{ flex: '1 1 200px' }}>
+            <h4 style={{ fontSize: '1.2rem', fontWeight: 700, marginBottom: '1.5rem', color: 'var(--brand-gold)' }}>Quick Links</h4>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <li><a href="#" style={{ color: '#cbd5e1', textDecoration: 'none' }}>Admissions 2026</a></li>
+              <li><a href="#" style={{ color: '#cbd5e1', textDecoration: 'none' }}>Academic Calendar</a></li>
+              <li><a href="#" style={{ color: '#cbd5e1', textDecoration: 'none' }}>Examination Results</a></li>
+              <li><a href="#" style={{ color: '#cbd5e1', textDecoration: 'none' }}>Placement Cell</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div style={{ padding: '1.5rem 4rem', background: '#091936', textAlign: 'center', color: '#94a3b8', fontSize: '0.9rem' }}>
+          <p>&copy; 2026 Global Tech University. All rights reserved.</p>
+        </div>
+      </section>
     </div>
   );
 };

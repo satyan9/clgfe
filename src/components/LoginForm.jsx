@@ -25,7 +25,7 @@ const LoginForm = ({ role, title, subtitle, onSubmit, error, loading }) => {
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
           style={{
-            background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+            background: 'var(--brand-navy)',
             width: '64px',
             height: '64px',
             borderRadius: '50%',
@@ -33,12 +33,12 @@ const LoginForm = ({ role, title, subtitle, onSubmit, error, loading }) => {
             alignItems: 'center',
             justifyContent: 'center',
             margin: '0 auto 1rem',
-            boxShadow: '0 8px 16px rgba(59, 130, 246, 0.3)'
+            boxShadow: '0 8px 16px rgba(14, 39, 83, 0.2)'
           }}
         >
           <User size={32} color="white" />
         </motion.div>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--brand-navy)', marginBottom: '0.25rem' }}>
           {title}
         </h2>
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
@@ -50,9 +50,9 @@ const LoginForm = ({ role, title, subtitle, onSubmit, error, loading }) => {
         {error && (
           <div style={{ 
             padding: '10px', 
-            background: 'rgba(239, 68, 68, 0.1)', 
-            border: '1px solid rgba(239, 68, 68, 0.3)', 
-            color: '#ef4444', 
+            background: 'rgba(218, 41, 28, 0.1)', 
+            border: '1px solid rgba(218, 41, 28, 0.3)', 
+            color: 'var(--brand-red)', 
             borderRadius: '8px',
             marginBottom: '1rem',
             fontSize: '0.9rem',
@@ -62,7 +62,7 @@ const LoginForm = ({ role, title, subtitle, onSubmit, error, loading }) => {
           </div>
         )}
         <div style={{ marginBottom: '1rem', position: 'relative' }}>
-          <User size={18} color="rgba(255,255,255,0.4)" style={{ position: 'absolute', top: '15px', left: '16px' }} />
+          <User size={18} color="#94a3b8" style={{ position: 'absolute', top: '15px', left: '16px' }} />
           <input 
             type="text" 
             placeholder="Username or ID" 
@@ -75,7 +75,7 @@ const LoginForm = ({ role, title, subtitle, onSubmit, error, loading }) => {
           />
         </div>
         <div style={{ marginBottom: '1.5rem', position: 'relative' }}>
-          <Lock size={18} color="rgba(255,255,255,0.4)" style={{ position: 'absolute', top: '15px', left: '16px' }} />
+          <Lock size={18} color="#94a3b8" style={{ position: 'absolute', top: '15px', left: '16px' }} />
           <input 
             type="password" 
             placeholder="Password" 

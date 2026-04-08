@@ -111,7 +111,7 @@ const Dashboard = ({ role }) => {
           animate={{ opacity: 1, y: 0 }}
           style={{ marginBottom: '3rem' }}
         >
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>
             {config.title}
           </h1>
           <p style={{ color: 'var(--text-secondary)' }}>

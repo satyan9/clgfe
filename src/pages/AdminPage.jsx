@@ -62,7 +62,7 @@ const AdminPage = () => {
             <ShieldAlert color="#ef4444" size={40} />
           </div>
         </div>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'white', marginBottom: '0.5rem' }}>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>
           System Administration
         </h1>
         <p style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>

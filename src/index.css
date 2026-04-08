@@ -1,13 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 :root {
-  --bg-color: #0f172a;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --accent-primary: #3b82f6;
-  --accent-hover: #2563eb;
-  --glass-bg: rgba(30, 41, 59, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --bg-color: #ffffff;
+  --bg-secondary: #f8fafc;
+  --text-primary: #1e293b;
+  --text-secondary: #475569;
+  --brand-navy: #0e2753;
+  --brand-red: #da291c;
+  --brand-gold: #f2a900;
+  --accent-primary: #0e2753;
+  --accent-hover: #163878;
+  --glass-bg: #ffffff;
+  --glass-border: #e2e8f0;
 }
 
 * {
@@ -21,56 +25,50 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: var(--bg-color);
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, hsla(225,39%,30%,0.5) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, hsla(339,49%,30%,0.5) 0, transparent 50%);
-  background-attachment: fixed;
 }
 
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .input-field {
   width: 100%;
   padding: 12px 16px;
   margin-bottom: 16px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid var(--glass-border);
-  border-radius: 8px;
-  color: var(--text-primary);
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #0f172a;
   font-size: 1rem;
   transition: all 0.3s ease;
 }
 
 .input-field:focus {
   outline: none;
-  border-color: var(--accent-primary);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  border-color: var(--brand-red);
+  box-shadow: 0 0 0 2px rgba(218, 41, 28, 0.2);
+  background: #ffffff;
 }
 
 .input-field::placeholder {
-  color: var(--text-secondary);
+  color: #94a3b8;
 }
 
 .btn-primary {
   width: 100%;
   padding: 12px 16px;
-  background: var(--accent-primary);
+  background: var(--brand-navy);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -82,9 +80,9 @@ body {
 }
 
 .btn-primary:hover {
-  background: var(--accent-hover);
+  background: var(--brand-red);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(218, 41, 28, 0.3);
 }
 
 .btn-primary:active {
@@ -98,23 +96,59 @@ body {
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  background-color: var(--bg-secondary);
 }
 
-h1.title {
-  font-size: 3rem;
+/* College Specifics */
+.top-notice-bar {
+  background-color: var(--brand-navy);
+  color: white;
+  padding: 6px 4rem;
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.news-ticker {
+  background-color: var(--brand-gold);
+  color: #000;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ticker-content {
+  display: inline-block;
+  padding-left: 100%;
+  animation: ticker 25s linear infinite;
+}
+
+@keyframes ticker {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.2rem;
   font-weight: 700;
-  text-align: center;
-  margin-bottom: 0.5rem;
-  background: linear-gradient(to right, #60a5fa, #a78bfa, #f472b6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--brand-navy);
+  margin-bottom: 3rem;
+  position: relative;
 }
 
-h2.subtitle {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-align: center;
-  margin-bottom: 2rem;
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: var(--brand-red);
 }
