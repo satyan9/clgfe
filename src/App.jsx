@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import MainPage from './pages/MainPage';
 import TeacherPage from './pages/TeacherPage';
 import AdminPage from './pages/AdminPage';
-import Dashboard from './pages/Dashboard';
+import StudentDashboard from './pages/StudentDashboard';
+import TeacherDashboard from './pages/TeacherDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
@@ -12,9 +14,9 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/teacher" element={<TeacherPage />} />
         <Route path="/admin" element={<AdminPage />} />
-        <Route path="/student-dashboard" element={<Dashboard role="student" />} />
-        <Route path="/teacher-dashboard" element={<Dashboard role="teacher" />} />
-        <Route path="/admin-dashboard" element={<Dashboard role="admin" />} />
+        <Route path="/student-dashboard" element={<StudentDashboard />} />
+        <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>

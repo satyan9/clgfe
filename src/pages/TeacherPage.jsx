@@ -14,7 +14,7 @@ const TeacherPage = () => {
     setError('');
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:5000/api/login', {
+      const response = await fetch('https://clgbe.vercel.app/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...credentials, role: 'teacher' })
@@ -36,7 +36,7 @@ const TeacherPage = () => {
   return (
     <div className="page-container" style={{ position: 'relative' }}>
       {/* Background decoration */}
-      <motion.div 
+      <motion.div
         animate={{ rotate: -360 }}
         transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
         style={{
@@ -70,7 +70,7 @@ const TeacherPage = () => {
         </p>
       </motion.div>
 
-      <LoginForm 
+      <LoginForm
         role="teacher"
         title="Faculty Login"
         subtitle="Access your teaching tools and schedules."
