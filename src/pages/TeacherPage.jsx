@@ -34,50 +34,57 @@ const TeacherPage = () => {
   };
 
   return (
-    <div className="page-container" style={{ position: 'relative' }}>
-      {/* Background decoration */}
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: 'absolute',
-          bottom: '-20%',
-          left: '-10%',
-          width: '50vw',
-          height: '50vw',
-          background: 'radial-gradient(circle, rgba(16, 185, 129, 0.05) 0%, transparent 70%)',
-          zIndex: -1,
-          borderRadius: '50%'
-        }}
-      />
+    <div className="page-container" style={{ 
+      position: 'relative', 
+      background: 'url(/campus_banner.png) center/cover no-repeat',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
+      {/* Overlay */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(30, 41, 59, 1) 0%, rgba(14, 39, 83, 0.95) 100%)', zIndex: 0 }} />
+      
+      <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '450px' }}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{ textAlign: 'center', marginBottom: '2.5rem' }}
+        >
+          <motion.div 
+            whileHover={{ scale: 1.05, rotate: 5 }}
+            onClick={() => navigate('/')}
+            style={{ display: 'inline-flex', background: 'white', padding: '16px', borderRadius: '24px', marginBottom: '1.5rem', boxShadow: '0 12px 24px rgba(0,0,0,0.2)', cursor: 'pointer' }}
+          >
+            <Presentation color="var(--brand-red)" size={48} />
+          </motion.div>
+          <h1 style={{ fontSize: '2.8rem', fontWeight: 900, color: 'white', marginBottom: '0.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
+            FACULTY PORTAL
+          </h1>
+          <div style={{ width: '60px', height: '4px', background: 'var(--brand-gold)', margin: '0 auto 1.5rem' }} />
+          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem', fontWeight: 500 }}>
+            Management System for Educators
+          </p>
+        </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        style={{ textAlign: 'center', marginBottom: '2rem' }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '16px', borderRadius: '20px' }}>
-            <Presentation color="#10b981" size={48} />
-          </div>
+        <LoginForm
+          role="teacher"
+          title="Staff Authentication"
+          subtitle="Please enter your employee credentials to continue."
+          onSubmit={handleTeacherLogin}
+          error={error}
+          loading={loading}
+        />
+        
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <button 
+            onClick={() => navigate('/')}
+            style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.6)', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 600 }}
+          >
+            ← Back to Campus Home
+          </button>
         </div>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>
-          Faculty Portal
-        </h1>
-        <p style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-          <BookOpenCheck size={16} /> Manage Classes & Students
-        </p>
-      </motion.div>
-
-      <LoginForm
-        role="teacher"
-        title="Faculty Login"
-        subtitle="Access your teaching tools and schedules."
-        onSubmit={handleTeacherLogin}
-        error={error}
-        loading={loading}
-      />
+      </div>
     </div>
   );
 };

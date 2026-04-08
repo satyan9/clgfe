@@ -143,7 +143,7 @@ const StudentDashboard = () => {
   const toggleFlip = (id) => setFlippedCards(prev => ({ ...prev, [id]: !prev[id] }));
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#0f0c29', fontFamily: "'Inter', sans-serif", color: '#e2e8f0' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', fontFamily: "'Inter', sans-serif", color: '#0e2753' }}>
 
       {/* ── SIDEBAR ── */}
       <motion.aside
@@ -151,34 +151,36 @@ const StudentDashboard = () => {
         animate={{ x: sidebarOpen ? 0 : -280 }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         style={{
-          width: 260, background: 'linear-gradient(180deg, #1a0533 0%, #0f0c29 100%)',
-          borderRight: '1px solid rgba(139,92,246,0.2)', display: 'flex', flexDirection: 'column',
-          position: 'fixed', top: 0, bottom: 0, zIndex: 50, overflowY: 'auto'
+          width: 260, background: '#ffffff',
+          borderRight: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column',
+          position: 'fixed', top: 0, bottom: 0, zIndex: 50, overflowY: 'auto',
+          boxShadow: '4px 0 15px rgba(0,0,0,0.02)'
         }}
       >
         {/* Logo */}
-        <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(139,92,246,0.2)' }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg, #8b5cf6, #6366f1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--brand-navy)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <BookOpen size={18} color="#fff" />
             </div>
-            <span style={{ fontWeight: 800, fontSize: '1rem', background: 'linear-gradient(135deg, #a78bfa, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              STUDENT PORTAL
+            <span style={{ fontWeight: 900, fontSize: '1rem', color: 'var(--brand-navy)', letterSpacing: '0.5px' }}>
+              STUDENT <span style={{ color: 'var(--brand-gold)' }}>PORTAL</span>
             </span>
           </div>
 
           {/* Avatar card */}
-          <div style={{ background: 'rgba(139,92,246,0.1)', borderRadius: '12px', padding: '1rem', border: '1px solid rgba(139,92,246,0.2)', textAlign: 'center' }}>
+          <div style={{ background: '#f8fafc', borderRadius: '16px', padding: '1.25rem', border: '1px solid #e2e8f0', textAlign: 'center' }}>
             <div style={{
-              width: 64, height: 64, borderRadius: '50%', background: 'linear-gradient(135deg, #8b5cf6, #6366f1)',
+              width: 72, height: 72, borderRadius: '50%', background: '#fff',
               margin: '0 auto 0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '1.5rem', fontWeight: 700, boxShadow: '0 0 20px rgba(139,92,246,0.5)'
+              fontSize: '1.5rem', fontWeight: 900, color: 'var(--brand-navy)',
+              border: '3px solid var(--brand-gold)', boxShadow: '0 8px 16px rgba(0,0,0,0.05)'
             }}>
               {STUDENT.name.split(' ').map(n => n[0]).join('')}
             </div>
-            <div style={{ fontWeight: 700 }}>{STUDENT.name}</div>
-            <div style={{ fontSize: '0.75rem', color: '#a78bfa', marginTop: '2px' }}>{STUDENT.rollNo}</div>
-            <div style={{ fontSize: '0.7rem', color: '#6b7280', marginTop: '4px' }}>{STUDENT.branch}</div>
+            <div style={{ fontWeight: 800, color: 'var(--brand-navy)', fontSize: '1rem' }}>{STUDENT.name}</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--brand-gold)', fontWeight: 700, marginTop: '4px' }}>{STUDENT.rollNo}</div>
+            <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '6px', lineHeight: 1.4 }}>{STUDENT.branch}</div>
           </div>
         </div>
 
@@ -187,20 +189,23 @@ const StudentDashboard = () => {
           {navItems.map(item => (
             <motion.button
               key={item.id}
-              whileHover={{ x: 4 }}
+              whileHover={{ x: 4, background: '#f1f5f9' }}
               whileTap={{ scale: 0.97 }}
               onClick={() => setActiveTab(item.id)}
               style={{
-                display: 'flex', alignItems: 'center', gap: '10px',
-                padding: '10px 14px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-                background: activeTab === item.id ? 'linear-gradient(135deg, rgba(139,92,246,0.3), rgba(99,102,241,0.2))' : 'transparent',
-                color: activeTab === item.id ? '#a78bfa' : '#94a3b8',
-                fontWeight: activeTab === item.id ? 600 : 400, fontSize: '0.875rem',
-                borderLeft: activeTab === item.id ? '3px solid #8b5cf6' : '3px solid transparent',
-                textAlign: 'left', width: '100%'
+                display: 'flex', alignItems: 'center', gap: '12px',
+                padding: '12px 14px', borderRadius: '12px', border: 'none', cursor: 'pointer',
+                background: activeTab === item.id ? 'var(--brand-navy)' : 'transparent',
+                color: activeTab === item.id ? '#fff' : '#64748b',
+                fontWeight: activeTab === item.id ? 700 : 500, fontSize: '0.9rem',
+                textAlign: 'left', width: '100%', transition: 'all 0.2s'
               }}
             >
-              {item.icon} {item.label}
+              <span style={{ color: activeTab === item.id ? 'var(--brand-gold)' : 'inherit' }}>{item.icon}</span>
+              {item.label}
+              {activeTab === item.id && (
+                <motion.div layoutId="nav-indicator" style={{ marginLeft: 'auto', width: 6, height: 6, borderRadius: '50%', background: 'var(--brand-gold)' }} />
+              )}
             </motion.button>
           ))}
         </nav>
@@ -218,18 +223,18 @@ const StudentDashboard = () => {
 
         {/* Top bar */}
         <header style={{
-          position: 'sticky', top: 0, zIndex: 40, background: 'rgba(15,12,41,0.85)', backdropFilter: 'blur(12px)',
-          borderBottom: '1px solid rgba(139,92,246,0.15)', padding: '0 2rem', height: 64,
+          position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)',
+          borderBottom: '1px solid #e2e8f0', padding: '0 2rem', height: 64,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <motion.button whileTap={{ scale: 0.9 }} onClick={() => setSidebarOpen(!sidebarOpen)}
-              style={{ background: 'none', border: 'none', color: '#a78bfa', cursor: 'pointer' }}>
+              style={{ background: 'none', border: 'none', color: 'var(--brand-navy)', cursor: 'pointer' }}>
               <Menu size={22} />
             </motion.button>
             <div>
-              <div style={{ fontSize: '0.7rem', color: '#6b7280' }}>{today}</div>
-              <div style={{ fontWeight: 700, fontSize: '1rem' }}>
+              <div style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 600 }}>{today}</div>
+              <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--brand-navy)' }}>
                 {navItems.find(n => n.id === activeTab)?.label}
               </div>
             </div>
@@ -238,25 +243,25 @@ const StudentDashboard = () => {
             <div style={{ position: 'relative' }}>
               <motion.button whileTap={{ scale: 0.9 }}
                 onClick={() => setNotifOpen(!notifOpen)}
-                style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.2)', borderRadius: '10px', padding: '8px', color: '#a78bfa', cursor: 'pointer', position: 'relative' }}>
+                style={{ background: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '10px', color: 'var(--brand-navy)', cursor: 'pointer', position: 'relative' }}>
                 <Bell size={18} />
-                {unread > 0 && <span style={{ position: 'absolute', top: 4, right: 4, width: 8, height: 8, background: '#ef4444', borderRadius: '50%' }} />}
+                {unread > 0 && <span style={{ position: 'absolute', top: 6, right: 6, width: 8, height: 8, background: 'var(--brand-red)', borderRadius: '50%', border: '2px solid #fff' }} />}
               </motion.button>
 
               <AnimatePresence>
                 {notifOpen && (
                   <motion.div initial={{ opacity: 0, y: -10, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-                    style={{ position: 'absolute', right: 0, top: '110%', width: 320, background: '#1a1040', border: '1px solid rgba(139,92,246,0.2)', borderRadius: '14px', zIndex: 100, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }}>
-                    <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid rgba(139,92,246,0.15)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span style={{ fontWeight: 700 }}>Notifications</span>
-                      <motion.button whileTap={{ scale: 0.9 }} onClick={() => setNotifOpen(false)} style={{ background: 'none', border: 'none', color: '#6b7280', cursor: 'pointer' }}><X size={16} /></motion.button>
+                    style={{ position: 'absolute', right: 0, top: '110%', width: 320, background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', zIndex: 100, overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
+                    <div style={{ padding: '1.25rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontWeight: 800, color: 'var(--brand-navy)' }}>Notifications</span>
+                      <motion.button whileTap={{ scale: 0.9 }} onClick={() => setNotifOpen(false)} style={{ background: 'none', border: 'none', color: '#64748b', cursor: 'pointer' }}><X size={16} /></motion.button>
                     </div>
                     {NOTICES.map(n => (
-                      <div key={n.id} style={{ padding: '0.875rem 1.25rem', borderBottom: '1px solid rgba(139,92,246,0.08)', display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: !n.read ? 'rgba(139,92,246,0.05)' : 'transparent' }}>
-                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: !n.read ? '#8b5cf6' : '#374151', marginTop: 6, flexShrink: 0 }} />
+                      <div key={n.id} style={{ padding: '1rem 1.25rem', borderBottom: '1px solid #f8fafc', display: 'flex', gap: '1rem', alignItems: 'flex-start', background: !n.read ? 'rgba(242,169,0,0.05)' : 'transparent' }}>
+                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: !n.read ? 'var(--brand-gold)' : '#cbd5e1', marginTop: 6, flexShrink: 0 }} />
                         <div>
-                          <div style={{ fontSize: '0.85rem', fontWeight: !n.read ? 600 : 400 }}>{n.title}</div>
-                          <div style={{ fontSize: '0.7rem', color: '#6b7280', marginTop: '2px' }}>{n.time}</div>
+                          <div style={{ fontSize: '0.85rem', fontWeight: !n.read ? 700 : 500, color: 'var(--brand-navy)' }}>{n.title}</div>
+                          <div style={{ fontSize: '0.7rem', color: '#64748b', marginTop: '4px' }}>{n.time}</div>
                         </div>
                       </div>
                     ))}
@@ -276,31 +281,30 @@ const StudentDashboard = () => {
               <motion.div key="overview" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
 
                 {/* Welcome Banner */}
-                <div style={{ background: 'linear-gradient(135deg, #1e0a4a 0%, #2d1b69 50%, #1a1040 100%)', borderRadius: '20px', padding: '2rem', marginBottom: '2rem', position: 'relative', overflow: 'hidden', border: '1px solid rgba(139,92,246,0.3)' }}>
-                  <div style={{ position: 'absolute', top: -40, right: -40, width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.3) 0%, transparent 70%)' }} />
-                  <div style={{ position: 'absolute', bottom: -60, left: 100, width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)' }} />
+                <div style={{ background: 'linear-gradient(135deg, var(--brand-navy) 0%, #1a365d 100%)', borderRadius: '24px', padding: '2.5rem', marginBottom: '2.5rem', position: 'relative', overflow: 'hidden', boxShadow: '0 20px 40px rgba(14,39,83,0.1)' }}>
+                  <div style={{ position: 'absolute', top: -50, right: -50, width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(242,169,0,0.15) 0%, transparent 70%)' }} />
                   <div style={{ position: 'relative', zIndex: 1 }}>
                     <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-                      <div style={{ fontSize: '0.85rem', color: '#a78bfa', marginBottom: '0.5rem' }}>Good Morning 🌤️</div>
-                      <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem' }}>
+                      <div style={{ fontSize: '0.9rem', color: 'var(--brand-gold)', fontWeight: 700, letterSpacing: '1px', marginBottom: '0.5rem' }}>STUDENT PORTAL ⚡</div>
+                      <h1 style={{ fontSize: '2.25rem', fontWeight: 900, marginBottom: '0.5rem', color: '#fff' }}>
                         Welcome back, {STUDENT.name.split(' ')[0]}!
                       </h1>
-                      <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>
+                      <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500 }}>
                         {STUDENT.year} · {STUDENT.branch} · Section {STUDENT.section}
                       </p>
                     </motion.div>
-                    <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap' }}>
                       {[
-                        { label: 'CGPA', value: STUDENT.cgpa, icon: <Star size={14} />, color: '#f59e0b' },
-                        { label: 'Semester', value: `Sem ${STUDENT.semester}`, icon: <BookOpen size={14} />, color: '#10b981' },
-                        { label: 'Advisor', value: STUDENT.advisor.split(' ')[1], icon: <User size={14} />, color: '#3b82f6' },
+                        { label: 'CGPA', value: STUDENT.cgpa, icon: <Star size={14} />, color: 'var(--brand-gold)' },
+                        { label: 'Semester', value: `Sem ${STUDENT.semester}`, icon: <BookOpen size={14} />, color: '#60a5fa' },
+                        { label: 'Advisor', value: STUDENT.advisor.split(' ')[1], icon: <User size={14} />, color: '#4ade80' },
                       ].map((stat, i) => (
                         <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 + i * 0.1 }}
-                          style={{ background: 'rgba(255,255,255,0.08)', borderRadius: '12px', padding: '0.75rem 1.25rem', display: 'flex', alignItems: 'center', gap: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', borderRadius: '14px', padding: '0.875rem 1.5rem', display: 'flex', alignItems: 'center', gap: '10px', border: '1px solid rgba(255,255,255,0.1)' }}>
                           <span style={{ color: stat.color }}>{stat.icon}</span>
                           <div>
-                            <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>{stat.label}</div>
-                            <div style={{ fontSize: '1rem', fontWeight: 700 }}>{stat.value}</div>
+                            <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>{stat.label}</div>
+                            <div style={{ fontSize: '1.125rem', fontWeight: 800, color: '#fff' }}>{stat.value}</div>
                           </div>
                         </motion.div>
                       ))}
@@ -309,26 +313,26 @@ const StudentDashboard = () => {
                 </div>
 
                 {/* Stats Grid */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
                   {[
                     { label: 'Overall Attendance', value: 87, unit: '%', icon: <Activity size={20} />, color: '#10b981', warn: false },
-                    { label: 'Pending Assignments', value: 3, unit: '', icon: <FileText size={20} />, color: '#f59e0b', warn: true },
-                    { label: 'Credits Earned', value: 72, unit: '', icon: <Award size={20} />, color: '#8b5cf6', warn: false },
+                    { label: 'Pending Assignments', value: 3, unit: '', icon: <FileText size={20} />, color: 'var(--brand-gold)', warn: true },
+                    { label: 'Credits Earned', value: 72, unit: '', icon: <Award size={20} />, color: 'var(--brand-navy)', warn: false },
                     { label: 'Backlogs', value: 0, unit: '', icon: <CheckCircle size={20} />, color: '#3b82f6', warn: false },
                   ].map((stat, i) => (
                     <motion.div key={i} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1 }}
-                      whileHover={{ y: -4, boxShadow: `0 20px 40px rgba(${stat.color === '#10b981' ? '16,185,129' : stat.color === '#f59e0b' ? '245,158,11' : stat.color === '#8b5cf6' ? '139,92,246' : '59,130,246'},0.2)` }}
-                      style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid rgba(${stat.color === '#10b981' ? '16,185,129' : stat.color === '#f59e0b' ? '245,158,11' : stat.color === '#8b5cf6' ? '139,92,246' : '59,130,246'},0.2)`, borderRadius: '16px', padding: '1.5rem', cursor: 'default' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                        <div style={{ background: `rgba(${stat.color === '#10b981' ? '16,185,129' : stat.color === '#f59e0b' ? '245,158,11' : stat.color === '#8b5cf6' ? '139,92,246' : '59,130,246'},0.15)`, borderRadius: '10px', padding: '8px', color: stat.color }}>
+                      whileHover={{ y: -4, boxShadow: '0 10px 30px rgba(0,0,0,0.05)', background: '#fff' }}
+                      style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '1.75rem', cursor: 'default', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
+                        <div style={{ background: '#f8fafc', borderRadius: '12px', padding: '10px', color: stat.color, border: '1px solid #f1f5f9' }}>
                           {stat.icon}
                         </div>
-                        {stat.warn && <span style={{ fontSize: '0.65rem', background: 'rgba(245,158,11,0.1)', color: '#f59e0b', padding: '2px 8px', borderRadius: '20px', border: '1px solid rgba(245,158,11,0.3)' }}>Action needed</span>}
+                        {stat.warn && <span style={{ fontSize: '0.65rem', background: 'rgba(242,169,0,0.1)', color: 'var(--brand-gold)', padding: '4px 10px', borderRadius: '20px', fontWeight: 700, border: '1px solid rgba(242,169,0,0.2)' }}>REQUIRED</span>}
                       </div>
-                      <div style={{ fontSize: '2rem', fontWeight: 800, color: stat.color }}>
+                      <div style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--brand-navy)' }}>
                         <AnimatedNumber value={stat.value} />{stat.unit}
                       </div>
-                      <div style={{ fontSize: '0.8rem', color: '#6b7280', marginTop: '4px' }}>{stat.label}</div>
+                      <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '6px', fontWeight: 600 }}>{stat.label}</div>
                     </motion.div>
                   ))}
                 </div>

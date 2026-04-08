@@ -100,41 +100,42 @@ const TeacherDashboard = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#050e1a', fontFamily: "'Inter', sans-serif", color: '#e2e8f0' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', fontFamily: "'Inter', sans-serif", color: '#0e2753' }}>
 
-      {/* ── SIDEBAR (Teal/Green Emerald Theme) ── */}
+      {/* ── SIDEBAR ── */}
       <motion.aside
         initial={{ x: -280 }}
         animate={{ x: sidebarOpen ? 0 : -280 }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         style={{
-          width: 260, background: 'linear-gradient(180deg, #071a12 0%, #050e1a 100%)',
-          borderRight: '1px solid rgba(16,185,129,0.15)', display: 'flex', flexDirection: 'column',
-          position: 'fixed', top: 0, bottom: 0, zIndex: 50, overflowY: 'auto'
+          width: 260, background: '#ffffff',
+          borderRight: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column',
+          position: 'fixed', top: 0, bottom: 0, zIndex: 50, overflowY: 'auto',
+          boxShadow: '4px 0 15px rgba(0,0,0,0.02)'
         }}
       >
         {/* Logo + Profile */}
-        <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(16,185,129,0.15)' }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '10px', background: 'linear-gradient(135deg, #10b981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 36, height: 36, borderRadius: '10px', background: 'var(--brand-navy)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <BookOpen size={18} color="#fff" />
             </div>
-            <span style={{ fontWeight: 800, fontSize: '0.9rem', background: 'linear-gradient(135deg, #34d399, #10b981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              FACULTY PORTAL
+            <span style={{ fontWeight: 900, fontSize: '1rem', color: 'var(--brand-navy)', letterSpacing: '0.5px' }}>
+              FACULTY <span style={{ color: 'var(--brand-gold)' }}>PORTAL</span>
             </span>
           </div>
 
           {/* Profile card */}
           <motion.div whileHover={{ scale: 1.02 }}
-            style={{ background: 'rgba(16,185,129,0.08)', borderRadius: '14px', padding: '1rem', border: '1px solid rgba(16,185,129,0.15)' }}>
+            style={{ background: '#f8fafc', borderRadius: '14px', padding: '1rem', border: '1px solid #e2e8f0' }}>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-              <div style={{ width: 52, height: 52, borderRadius: '12px', background: 'linear-gradient(135deg, #10b981, #059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 800, boxShadow: '0 0 20px rgba(16,185,129,0.4)' }}>
+              <div style={{ width: 52, height: 52, borderRadius: '12px', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.1rem', fontWeight: 900, border: '2px solid var(--brand-gold)', color: 'var(--brand-navy)', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>
                 {TEACHER.initials}
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{TEACHER.name}</div>
-                <div style={{ fontSize: '0.7rem', color: '#34d399', marginTop: '2px' }}>{TEACHER.designation}</div>
-                <div style={{ fontSize: '0.65rem', color: '#6b7280', marginTop: '1px' }}>{TEACHER.empId}</div>
+                <div style={{ fontWeight: 800, fontSize: '0.9rem', color: 'var(--brand-navy)' }}>{TEACHER.name}</div>
+                <div style={{ fontSize: '0.7rem', color: 'var(--brand-gold)', marginTop: '2px', fontWeight: 700 }}>{TEACHER.designation}</div>
+                <div style={{ fontSize: '0.65rem', color: '#64748b', marginTop: '1px' }}>{TEACHER.empId}</div>
               </div>
             </div>
           </motion.div>
@@ -167,17 +168,25 @@ const TeacherDashboard = () => {
       {/* ── MAIN ── */}
       <div style={{ flex: 1, marginLeft: sidebarOpen ? 260 : 0, transition: 'margin 0.3s', display: 'flex', flexDirection: 'column' }}>
 
-        {/* Topbar */}
-        <header style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(5,14,26,0.9)', backdropFilter: 'blur(12px)', borderBottom: '1px solid rgba(16,185,129,0.1)', padding: '0 2rem', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* Top bar */}
+        <header style={{
+          position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)',
+          borderBottom: '1px solid #e2e8f0', padding: '0 2rem', height: 64,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+        }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <motion.button whileTap={{ scale: 0.9 }} onClick={() => setSidebarOpen(!sidebarOpen)} style={{ background: 'none', border: 'none', color: '#34d399', cursor: 'pointer' }}>
+            <motion.button whileTap={{ scale: 0.9 }} onClick={() => setSidebarOpen(!sidebarOpen)}
+              style={{ background: 'none', border: 'none', color: 'var(--brand-navy)', cursor: 'pointer' }}>
               <Menu size={22} />
             </motion.button>
-            <div style={{ fontWeight: 700, fontSize: '1rem' }}>{navItems.find(n => n.id === activeTab)?.label}</div>
+            <div>
+              <div style={{ fontSize: '0.7rem', color: '#64748b', fontWeight: 600 }}>GTU Faculty</div>
+              <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--brand-navy)' }}>
+                {navItems.find(n => n.id === activeTab)?.label}
+              </div>
+            </div>
           </div>
-          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-            <div style={{ fontSize: '0.8rem', color: '#6b7280' }}>{new Date().toLocaleDateString('en-IN', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
-          </div>
+          <div style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>{new Date().toLocaleDateString('en-IN', { weekday: 'long', month: 'long', day: 'numeric' })}</div>
         </header>
 
         {/* ── CONTENT ── */}
@@ -189,22 +198,24 @@ const TeacherDashboard = () => {
               <motion.div key="ovw" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
 
                 {/* Hero card */}
-                <div style={{ background: 'linear-gradient(135deg, #071a12 0%, #0a2618 50%, #071a12 100%)', border: '1px solid rgba(16,185,129,0.25)', borderRadius: '20px', padding: '2rem', marginBottom: '2rem', position: 'relative', overflow: 'hidden' }}>
-                  <div style={{ position: 'absolute', top: -30, right: -30, width: 180, height: 180, borderRadius: '50%', background: 'radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 70%)' }} />
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                    <div style={{ fontSize: '0.8rem', color: '#34d399', marginBottom: '0.5rem' }}>Faculty Dashboard</div>
-                    <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem' }}>Good morning, {TEACHER.name.split(' ')[1]} 👋</h1>
-                    <p style={{ color: '#6b7280', fontSize: '0.9rem' }}>{TEACHER.dept} · {TEACHER.experience} Experience</p>
+                <div style={{ background: 'linear-gradient(135deg, var(--brand-navy) 0%, #1a365d 100%)', borderRadius: '24px', padding: '2.5rem', marginBottom: '2.5rem', position: 'relative', overflow: 'hidden', boxShadow: '0 20px 40px rgba(14,39,83,0.1)' }}>
+                  <div style={{ position: 'absolute', top: -50, right: -50, width: 250, height: 250, borderRadius: '50%', background: 'radial-gradient(circle, rgba(242,169,0,0.15) 0%, transparent 70%)' }} />
+                  <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--brand-gold)', fontWeight: 700, letterSpacing: '1px', marginBottom: '0.5rem' }}>FACULTY PORTAL 🎓</div>
+                    <h1 style={{ fontSize: '2.25rem', fontWeight: 900, marginBottom: '0.5rem', color: '#fff' }}>Good morning, {TEACHER.name.split(', ')[1]}! 👋</h1>
+                    <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 500 }}>{TEACHER.dept} · {TEACHER.experience} Experience</p>
                   </motion.div>
-                  <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem', flexWrap: 'wrap' }}>
                     {[
-                      { label: 'Classes', value: MY_CLASSES.length, color: '#10b981' },
-                      { label: 'Students', value: MY_CLASSES.reduce((s, c) => s + c.students, 0), color: '#3b82f6' },
-                      { label: 'Active Tasks', value: ASSIGNMENTS_ISSUED.filter(a => a.status === 'active').length, color: '#f59e0b' },
+                      { label: 'Classes', value: MY_CLASSES.length, color: 'var(--brand-gold)' },
+                      { label: 'Students', value: MY_CLASSES.reduce((s, c) => s + c.students, 0), color: '#60a5fa' },
+                      { label: 'Active Tasks', value: ASSIGNMENTS_ISSUED.filter(a => a.status === 'active').length, color: '#4ade80' },
                     ].map((s, i) => (
-                      <div key={i} style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '12px', padding: '0.75rem 1.25rem', border: '1px solid rgba(255,255,255,0.08)' }}>
-                        <div style={{ fontSize: '1.75rem', fontWeight: 800, color: s.color }}>{s.value}</div>
-                        <div style={{ fontSize: '0.70rem', color: '#6b7280' }}>{s.label}</div>
+                      <div key={i} style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', borderRadius: '14px', padding: '0.875rem 1.5rem', display: 'flex', alignItems: 'center', gap: '10px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <div>
+                          <div style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600 }}>{s.label}</div>
+                          <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#fff' }}>{s.value}</div>
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -212,7 +223,7 @@ const TeacherDashboard = () => {
 
                 {/* Today's quick schedule */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
-                  <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(16,185,129,0.1)', borderRadius: '16px', padding: '1.5rem' }}>
+                  <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
                     <div style={{ fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}><Clock size={15} color="#10b981" /> Today's Classes</div>
                     {SCHEDULE.filter(s => s.type !== 'break').slice(0, 3).map((s, i) => (
                       <motion.div key={i} initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.1 }}
@@ -226,7 +237,7 @@ const TeacherDashboard = () => {
                     ))}
                   </div>
 
-                  <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(16,185,129,0.1)', borderRadius: '16px', padding: '1.5rem' }}>
+                  <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
                     <div style={{ fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}><AlertTriangle size={15} color="#f59e0b" /> Students Needing Attention</div>
                     {MY_STUDENTS.filter(s => ['critical', 'at-risk'].includes(s.status)).map((s, i) => (
                       <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
@@ -241,7 +252,7 @@ const TeacherDashboard = () => {
                 </div>
 
                 {/* Assignment Progress */}
-                <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(16,185,129,0.1)', borderRadius: '16px', padding: '1.5rem' }}>
+                <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1.5rem', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
                   <div style={{ fontWeight: 700, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}><ClipboardList size={15} color="#3b82f6" /> Assignment Submission Progress</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                     {ASSIGNMENTS_ISSUED.map((a, i) => (

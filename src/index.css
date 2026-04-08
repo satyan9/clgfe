@@ -2,16 +2,16 @@
 
 :root {
   --bg-color: #ffffff;
-  --bg-secondary: #f8fafc;
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
+  --bg-secondary: #f4f7fa;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
   --brand-navy: #0e2753;
   --brand-red: #da291c;
   --brand-gold: #f2a900;
   --accent-primary: #0e2753;
-  --accent-hover: #163878;
+  --accent-hover: #da291c;
   --glass-bg: #ffffff;
-  --glass-border: #e2e8f0;
+  --glass-border: #cbd5e1;
 }
 
 * {
@@ -33,10 +33,11 @@ body {
 }
 
 .glass-panel {
-  background: var(--glass-bg);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--glass-border);
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .input-field {

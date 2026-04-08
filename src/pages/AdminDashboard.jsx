@@ -115,40 +115,41 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: '#08080f', fontFamily: "'Inter', sans-serif", color: '#e2e8f0' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: '#f8fafc', fontFamily: "'Inter', sans-serif", color: '#0e2753' }}>
 
-      {/* ── SIDEBAR (Dark Crimson/Red Accent) ── */}
+      {/* ── SIDEBAR ── */}
       <motion.aside
         initial={{ x: -280 }}
         animate={{ x: sidebarOpen ? 0 : -280 }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         style={{
-          width: 260, background: 'linear-gradient(180deg, #130a0a 0%, #08080f 100%)',
-          borderRight: '1px solid rgba(220,38,38,0.15)', display: 'flex', flexDirection: 'column',
-          position: 'fixed', top: 0, bottom: 0, zIndex: 50, overflowY: 'auto'
+          width: 260, background: '#ffffff',
+          borderRight: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column',
+          position: 'fixed', top: 0, bottom: 0, zIndex: 50, overflowY: 'auto',
+          boxShadow: '4px 0 15px rgba(0,0,0,0.02)'
         }}
       >
         {/* Logo + Profile */}
-        <div style={{ padding: '1.5rem', borderBottom: '1px solid rgba(220,38,38,0.12)' }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid #f1f5f9' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem' }}>
-            <div style={{ width: 36, height: 36, borderRadius: '8px', background: 'linear-gradient(135deg, #dc2626, #991b1b)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 36, height: 36, borderRadius: '8px', background: 'var(--brand-navy)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <ShieldCheck size={18} color="#fff" />
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: '0.85rem', color: '#fca5a5', letterSpacing: '1px' }}>ADMIN CONTROL</div>
-              <div style={{ fontSize: '0.6rem', color: '#6b7280', letterSpacing: '0.5px' }}>RESTRICTED ACCESS</div>
+              <div style={{ fontWeight: 900, fontSize: '0.9rem', color: 'var(--brand-navy)', letterSpacing: '0.5px' }}>ADMIN <span style={{ color: 'var(--brand-gold)' }}>CONTROL</span></div>
+              <div style={{ fontSize: '0.6rem', color: '#64748b', letterSpacing: '0.5px', fontWeight: 700 }}>SECURE ACCESS</div>
             </div>
           </div>
 
-          {/* Profile */}
-          <div style={{ background: 'rgba(220,38,38,0.08)', borderRadius: '12px', padding: '1rem', border: '1px solid rgba(220,38,38,0.15)' }}>
+          {/* Profile card */}
+          <div style={{ background: '#f8fafc', borderRadius: '12px', padding: '1rem', border: '1px solid #e2e8f0' }}>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-              <div style={{ width: 44, height: 44, borderRadius: '50%', background: 'linear-gradient(135deg, #dc2626, #b91c1c)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1rem', boxShadow: '0 0 20px rgba(220,38,38,0.4)' }}>
+              <div style={{ width: 44, height: 44, borderRadius: '50%', background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid var(--brand-red)', fontWeight: 900, fontSize: '1rem', color: 'var(--brand-red)', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>
                 {ADMIN.initials}
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: '0.875rem' }}>{ADMIN.name}</div>
-                <div style={{ fontSize: '0.65rem', color: '#fca5a5', marginTop: '1px' }}>{ADMIN.role}</div>
+                <div style={{ fontWeight: 800, fontSize: '0.875rem', color: 'var(--brand-navy)' }}>{ADMIN.name}</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--brand-gold)', marginTop: '1px', fontWeight: 700 }}>{ADMIN.role}</div>
               </div>
             </div>
           </div>
@@ -207,26 +208,24 @@ const AdminDashboard = () => {
             {activeTab === 'overview' && (
               <motion.div key="ovw" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
 
-                {/* Big stat cards with Reveal animation */}
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+                {/* Big stat cards */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
                   {STATS.map((stat, i) => (
                     <motion.div key={i}
-                      initial={{ opacity: 0, scale: 0.85 }}
+                      initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.12, duration: 0.5, type: 'spring' }}
-                      whileHover={{ y: -6, boxShadow: `0 25px 50px rgba(0,0,0,0.4)` }}
-                      style={{ background: stat.gradient, border: `1px solid rgba(255,255,255,0.07)`, borderRadius: '20px', padding: '1.75rem', position: 'relative', overflow: 'hidden' }}>
-                      <div style={{ position: 'absolute', top: -20, right: -20, width: 100, height: 100, borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-                      <div style={{ position: 'absolute', bottom: 10, right: 10, color: 'rgba(255,255,255,0.07)' }}>{stat.icon}</div>
-                      <div style={{ background: 'rgba(255,255,255,0.12)', borderRadius: '10px', padding: '8px', display: 'inline-block', color: stat.color, marginBottom: '1rem' }}>
+                      transition={{ delay: i * 0.1 }}
+                      whileHover={{ y: -6, boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
+                      style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '1.75rem', borderLeft: `4px solid ${stat.color === '#dc2626' ? 'var(--brand-red)' : stat.color}` }}>
+                      <div style={{ background: '#f8fafc', borderRadius: '10px', padding: '8px', display: 'inline-block', color: 'var(--brand-navy)', marginBottom: '1rem', border: '1px solid #f1f5f9' }}>
                         {stat.icon}
                       </div>
-                      <div style={{ fontSize: '2.25rem', fontWeight: 900, lineHeight: 1 }}>
+                      <div style={{ fontSize: '2.5rem', fontWeight: 900, lineHeight: 1, color: 'var(--brand-navy)' }}>
                         <Counter to={typeof stat.value === 'number' ? stat.value : stat.value} />
                       </div>
-                      <div style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)', marginTop: '4px' }}>{stat.label}</div>
-                      <div style={{ fontSize: '0.7rem', marginTop: '8px', color: stat.up ? '#34d399' : stat.up === false ? '#ef4444' : '#9ca3af', fontWeight: 600 }}>
-                        {stat.up !== null ? (stat.up ? '↑' : '↓') : '→'} {stat.change} this month
+                      <div style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '6px', fontWeight: 600 }}>{stat.label}</div>
+                      <div style={{ fontSize: '0.7rem', marginTop: '10px', color: stat.up ? '#10b981' : stat.up === false ? '#ef4444' : '#64748b', fontWeight: 700 }}>
+                        {stat.up !== null ? (stat.up ? '↑' : '↓') : '→'} {stat.change}
                       </div>
                     </motion.div>
                   ))}
@@ -236,9 +235,9 @@ const AdminDashboard = () => {
                 <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
 
                   {/* Bar Chart */}
-                  <div style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(220,38,38,0.12)', borderRadius: '18px', padding: '1.75rem' }}>
+                  <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '18px', padding: '1.75rem', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                      <div style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: '8px' }}><BarChart2 size={16} color="#dc2626" /> Monthly Enrollment (2025)</div>
+                      <div style={{ fontWeight: 800, color: 'var(--brand-navy)', display: 'flex', alignItems: 'center', gap: '8px' }}><BarChart2 size={16} color="var(--brand-gold)" /> Monthly Enrollment (2025)</div>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: 130 }}>
                       {MONTHLY_ENROLLMENT.map((v, i) => (

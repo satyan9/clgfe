@@ -34,50 +34,57 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="page-container" style={{ position: 'relative' }}>
-      {/* Background decoration */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 150, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: 'absolute',
-          top: '-20%',
-          right: '-10%',
-          width: '60vw',
-          height: '60vw',
-          background: 'radial-gradient(circle, rgba(220, 38, 38, 0.05) 0%, transparent 70%)',
-          zIndex: -1,
-          borderRadius: '50%'
-        }}
-      />
+    <div className="page-container" style={{ 
+      position: 'relative', 
+      background: 'url(/campus_banner.png) center/cover no-repeat',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
+      {/* Overlay */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(14, 39, 83, 0.98) 0%, rgba(14, 39, 83, 0.9) 100%)', zIndex: 0 }} />
 
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5 }}
-        style={{ textAlign: 'center', marginBottom: '2rem' }}
-      >
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
-          <div style={{ background: 'rgba(220, 38, 38, 0.1)', padding: '16px', borderRadius: '50%' }}>
-            <ShieldAlert color="#ef4444" size={40} />
-          </div>
+      <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '450px' }}>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          style={{ textAlign: 'center', marginBottom: '2.5rem' }}
+        >
+          <motion.div 
+            whileHover={{ scale: 1.05, rotate: -5 }}
+            onClick={() => navigate('/')}
+            style={{ display: 'inline-flex', background: 'white', padding: '16px', borderRadius: '50%', marginBottom: '1.5rem', boxShadow: '0 12px 24px rgba(0,0,0,0.3)', cursor: 'pointer' }}
+          >
+            <ShieldAlert color="var(--brand-red)" size={48} />
+          </motion.div>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: 'white', marginBottom: '0.5rem', textShadow: '0 2px 4px rgba(0,0,0,0.3)', letterSpacing: '1px' }}>
+            ADMIN CONTROL
+          </h1>
+          <div style={{ width: '40px', height: '4px', background: 'var(--brand-gold)', margin: '0 auto 1.5rem' }} />
+          <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '1rem', fontWeight: 600, textTransform: 'uppercase' }}>
+            Authorised Access Only
+          </p>
+        </motion.div>
+
+        <LoginForm
+          role="admin"
+          title="Security Check"
+          subtitle="Authentication required to manage institutional records."
+          onSubmit={handleAdminLogin}
+          error={error}
+          loading={loading}
+        />
+
+        <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+          <button 
+            onClick={() => navigate('/')}
+            style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.5)', cursor: 'pointer', fontSize: '0.9rem', fontWeight: 600 }}
+          >
+            ← Global Tech Main Page
+          </button>
         </div>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 700, color: 'var(--brand-navy)', marginBottom: '0.5rem' }}>
-          System Administration
-        </h1>
-        <p style={{ color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-          <Terminal size={16} /> Restricted Access Area
-        </p>
-      </motion.div>
-
-      <LoginForm
-        role="admin"
-        title="Admin Authentication"
-        subtitle="Please enter your elevated credentials."
-        onSubmit={handleAdminLogin}
-        error={error}
-        loading={loading}
-      />
+      </div>
     </div>
   );
 };
