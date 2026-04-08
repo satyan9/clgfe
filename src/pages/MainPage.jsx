@@ -43,8 +43,9 @@ const MainPage = () => {
           <span><Mail size={14} style={{ display: 'inline', marginRight: '4px' }} /> admissions@globaltech.edu</span>
         </div>
         <div>
+          <span style={{ cursor: 'pointer', color: 'white', marginRight: '15px', fontWeight: 600 }} onClick={() => navigate('/teacher')}>Staff Portal</span>
+          <span style={{ cursor: 'pointer', color: 'white', marginRight: '15px', fontWeight: 600 }} onClick={() => navigate('/admin')}>Admin Portal</span>
           <a href="#about" style={{ color: 'white', textDecoration: 'none', marginRight: '15px' }}>Alumni</a>
-          <a href="#contact" style={{ color: 'white', textDecoration: 'none', marginRight: '15px' }}>Careers</a>
           <a href="#contact" style={{ color: 'white', textDecoration: 'none' }}>Library</a>
         </div>
       </div>
